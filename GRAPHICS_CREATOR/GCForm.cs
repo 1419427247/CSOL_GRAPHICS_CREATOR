@@ -167,6 +167,8 @@ namespace GRAPHICS_CREATOR
                         case "bitmap":
                             builder.Append(imageTreeView.SelectedNode.Text);
                             builder.Append(" = '");
+                            builder.Append(GCBase64.GetString(imagePairs[imageTreeView.SelectedNode.Text].bitmap.Width, 2));
+                            builder.Append(GCBase64.GetString(imagePairs[imageTreeView.SelectedNode.Text].bitmap.Height, 2));
                             builder.Append(imagePairs[imageTreeView.SelectedNode.Text].data);
                             builder.Append(" '\n\r");
                             break;
@@ -191,6 +193,8 @@ namespace GRAPHICS_CREATOR
                         {
                             builder.Append(node.Text);
                             builder.Append(" = '");
+                            builder.Append(GCBase64.GetString(imagePairs[node.Text].bitmap.Width, 2));
+                            builder.Append(GCBase64.GetString(imagePairs[node.Text].bitmap.Height, 2));
                             builder.Append(imagePairs[node.Text].data);
                             builder.Append(" '\n\r");
                         }
