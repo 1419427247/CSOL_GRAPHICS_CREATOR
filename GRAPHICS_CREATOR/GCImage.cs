@@ -10,7 +10,7 @@ namespace GRAPHICS_CREATOR
     {
         public Bitmap bitmap;
         public int boxCount;
-        public string data;
+        public string data = "";
         public string Type { get; }
 
         private Graphics graphics;
@@ -30,6 +30,8 @@ namespace GRAPHICS_CREATOR
             Type = "text";
             GetBoxs();
 
+
+
         }
 
         public GCImage(Image image)
@@ -41,6 +43,9 @@ namespace GRAPHICS_CREATOR
 
         public void GetBoxs()
         {
+            int minx = 64;
+            int miny = 64;
+
             Dictionary<int, List<int>> colorBoxsPairs = new Dictionary<int, List<int>>();
 
             Color[,] pix = new Color[bitmap.Height, bitmap.Width];
@@ -79,6 +84,13 @@ namespace GRAPHICS_CREATOR
                             if (!colorBoxsPairs.ContainsKey(int_color))
                                 colorBoxsPairs.Add(int_color, new List<int>());
                             List<int> list = colorBoxsPairs[int_color];
+                            if (Type == "text")
+                            {
+                                if (minx > C)
+                                    minx = C;
+                                if (miny > R)
+                                    miny = R;
+                            }
                             list.Add(C);
                             list.Add(R);
                             list.Add(1);
@@ -91,6 +103,13 @@ namespace GRAPHICS_CREATOR
                             if (!colorBoxsPairs.ContainsKey(int_color))
                                 colorBoxsPairs.Add(int_color, new List<int>());
                             List<int> list = colorBoxsPairs[int_color];
+                            if (Type == "text")
+                            {
+                                if(minx > C)
+                                    minx = C;
+                                if (miny > R)
+                                    miny = R;
+                            }
                             list.Add(C);
                             list.Add(R);
                             list.Add(c);
@@ -101,17 +120,10 @@ namespace GRAPHICS_CREATOR
                 }
             }
 
+            Console.WriteLine(minx + "," + miny);
+
             StringBuilder builder = new StringBuilder(boxCount * 4);
 
-            //string str = "0000a161421a5231c216f2177319a721d7215a21hb14ae71";
-
-
-            //builder.Append(GCBase64.GetNumber(str.Substring(0, 4)));
-            //for (int i = 4; i < str.Length; i++)
-            //{
-            //    builder.Append(GCBase64.GetNumber(str.Substring(i,1)));
-            //}
-            //builder.Append("\r\n");
             int bit;
             if (Type == "bitmap")
             {
@@ -120,6 +132,14 @@ namespace GRAPHICS_CREATOR
             else
             {
                 bit = 1;
+                foreach (var item in colorBoxsPairs.Values)
+                {
+                    for (int i = 0; i < item.Count; i+=4)
+                    {
+                        item[i] -= minx;
+                        item[i+1] -= miny;
+                    }
+                }
             }
 
             foreach (var item in colorBoxsPairs)
