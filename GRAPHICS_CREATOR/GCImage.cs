@@ -44,7 +44,6 @@ namespace GRAPHICS_CREATOR
         public void GetBoxs()
         {
             int minx = 64;
-            int miny = 64;
 
             Dictionary<int, List<int>> colorBoxsPairs = new Dictionary<int, List<int>>();
 
@@ -88,8 +87,6 @@ namespace GRAPHICS_CREATOR
                             {
                                 if (minx > C)
                                     minx = C;
-                                if (miny > R)
-                                    miny = R;
                             }
                             list.Add(C);
                             list.Add(R);
@@ -107,8 +104,6 @@ namespace GRAPHICS_CREATOR
                             {
                                 if(minx > C)
                                     minx = C;
-                                if (miny > R)
-                                    miny = R;
                             }
                             list.Add(C);
                             list.Add(R);
@@ -119,8 +114,6 @@ namespace GRAPHICS_CREATOR
                     }
                 }
             }
-
-            Console.WriteLine(minx + "," + miny);
 
             StringBuilder builder = new StringBuilder(boxCount * 4);
 
@@ -137,7 +130,6 @@ namespace GRAPHICS_CREATOR
                     for (int i = 0; i < item.Count; i+=4)
                     {
                         item[i] -= minx;
-                        item[i+1] -= miny;
                     }
                 }
             }
